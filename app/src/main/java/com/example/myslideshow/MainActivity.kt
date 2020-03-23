@@ -1,5 +1,6 @@
 package com.example.myslideshow
 
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -10,6 +11,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.concurrent.timer
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var player: MediaPlayer
 
     class MyAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
         private val resources = listOf(
@@ -39,5 +42,16 @@ class MainActivity : AppCompatActivity() {
                 pager.currentItem = (pager.currentItem + 1) % 10
             }
         }
+        player = MediaPlayer.create(this, R.raw.getdown)
+        player.isLooping = true
+    }
+    override fun onResume() {
+        super.onResume()
+        player.start()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        player.pause()
     }
 }
